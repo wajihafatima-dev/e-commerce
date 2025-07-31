@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
+import { Box, Typography, Button, Grid, Card, CardContent } from "@mui/material";
 import { getCart, removeFromCart } from "@/utils/cartUtils";
-import { Box, Button, Typography, Card, CardContent, Grid } from "@mui/material";
 
 export default function CartPage() {
   const [cart, setCart] = useState([]);
@@ -21,23 +21,27 @@ export default function CartPage() {
         Your Cart
       </Typography>
       <Grid container spacing={2}>
-        {cart.map((item) => (
-          <Grid item xs={12} sm={6} md={4} key={item._id}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6">{item.name}</Typography>
-                <Typography>${item.price}</Typography>
-                <Button
-                  color="error"
-                  variant="outlined"
-                  onClick={() => handleRemove(item._id)}
-                >
-                  Remove
-                </Button>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
+        {cart.length === 0 ? (
+          <Typography>No items in cart</Typography>
+        ) : (
+          cart.map((item) => (
+            <Grid item xs={12} sm={6} md={4} key={item._id}>
+              <Card>
+                <CardContent>
+                  <Typography variant="h6">{item.name}</Typography>
+                  <Typography>Qty: {item.qty}</Typography>
+                  <Typography>Price: ${item.price * item.qty}</Typography>
+                  <Button
+                    color="error"
+                    onClick={() => handleRemove(item._id)}
+                  >
+                    Remove
+                  </Button>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))
+        )}
       </Grid>
     </Box>
   );

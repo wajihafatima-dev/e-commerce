@@ -16,13 +16,13 @@ export default async function handler(req, res) {
   if (req.method === "POST") {
     try {
       const data = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
-      const { name, price, image, description } = data;
+      const { name, price, image, description,category } = data;
 
-      if (!name || !price || !image || !description) {
+      if (!name || !price || !image || !description || !category) {
         return res.status(400).json({ error: "All fields are required" });
       }
 
-      const product = await Products.create({ name, price, image, description });
+      const product = await Products.create({ name, price, image, description,category });
       return res.status(201).json(product);
     } catch (error) {
       console.error(error);

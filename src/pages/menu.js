@@ -5,6 +5,7 @@ import ProductCard from "./components/ProductCard";
 
 export default function Home() {
   const [products, setProducts] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
   useEffect(() => {
     fetch("/api/products")
@@ -12,40 +13,52 @@ export default function Home() {
       .then(setProducts);
   }, []);
 
+  const categories = ["All", "Gourmet Pizzas", "Burgers", "Desserts", "Drinks"];
+
+  // Filtered products
+  const filteredProducts =
+    selectedCategory === "All"
+      ? products
+      : products.filter(
+          (product) => product.category === selectedCategory
+        );
+
   return (
-    <Box sx={{ background: "#f7f5f2", minHeight: "100vh", py: 5 }}>
-      <Container>
+    <Box sx={{background: "#f7f5f2", minHeight: "100vh", py: 12 }}>
+        {/* Tabs */}
         <Box sx={{ textAlign: "center", mb: 5 }}>
           <Typography variant="h4" sx={{ fontWeight: "bold", mb: 2 }}>
             OUR MENU
           </Typography>
           <Box sx={{ display: "flex", justifyContent: "center", gap: 4, flexWrap: "wrap" }}>
-            {["Gourmet Pizzas", "Burgers", "Desserts", "Drinks"].map((cat) => (
+            {categories.map((tab) => (
               <Button
-                key={cat}
+                key={tab}
+                onClick={() => setSelectedCategory(tab)}
                 sx={{
-                  background: "#fff",
+                  background: selectedCategory === tab ? "#ff4d4d" : "#fff",
+                  color: selectedCategory === tab ? "#fff" : "#0E492B",
                   borderRadius: 20,
                   px: 3,
-                  color:"#0E492B",
                   boxShadow: 1,
                   fontWeight: "bold",
                   "&:hover": { background: "#ff4d4d", color: "#fff" },
                 }}
               >
-                {cat}
+                {tab}
               </Button>
             ))}
           </Box>
         </Box>
+       <Box sx={{display:"flex",alignItems:"center",justifyContent:"center"}}>
         <Grid container spacing={4}>
-          {products.map((product) => (
-            <Grid item key={product._id} xs={12} sm={6} md={3} >
+          {filteredProducts.map((product) => (
+            <Grid item key={product._id} xs={12} sm={6} md={3}>
               <ProductCard product={product} />
             </Grid>
           ))}
         </Grid>
-      </Container>
+       </Box>
     </Box>
   );
 }

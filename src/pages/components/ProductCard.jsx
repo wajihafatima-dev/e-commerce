@@ -1,4 +1,5 @@
 "use client";
+import { addToCart } from "@/utils/cartUtils";
 import {
   Card,
   CardContent,
@@ -8,7 +9,6 @@ import {
   Box,
 } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { addToCart } from "@/utils/cartUtils";
 
 const ProductCard = ({ product }) => {
   const router = useRouter();
@@ -31,41 +31,35 @@ const ProductCard = ({ product }) => {
         borderRadius: 3,
         boxShadow: 3,
         transition: "transform 0.2s ease-in-out",
-        "&:hover": {
-          transform: "scale(1.02)",
-        },
+        "&:hover": { transform: "scale(1.02)" },
       }}
     >
       <Box
-        component={"img"}
+        component="img"
         src={product.image}
         alt={product.name}
         sx={{
           width: "100%",
           minWidth: "300px",
-          height: 250,
-          py: 2,
-        }}
-        style={{
-          objectFit: "contain",
+          height: 200,
+          objectFit: "cover",
           borderTopLeftRadius: 12,
           borderTopRightRadius: 12,
         }}
       />
       <CardContent sx={{ flexGrow: 1 }}>
-        <Typography variant="h6" fontWeight={600} gutterBottom noWrap>
+        <Typography variant="h6"
+         fontWeight={600} gutterBottom noWrap>
           {product.name}
         </Typography>
         <Typography
           variant="subtitle1"
           sx={{ color: "#0E492B" }}
           fontWeight={700}
-          mt={1}
         >
-          ${product.price}
+          Rs.{product.price}
         </Typography>
       </CardContent>
-
       <CardActions sx={{ justifyContent: "space-between", px: 2, pb: 2 }}>
         <Button
           variant="outlined"
