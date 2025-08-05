@@ -3,14 +3,14 @@ import { useState } from "react";
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 
-export default function Login() {
+export default function login() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
     try {
-      const res = await fetch("/api/auth", {
+      const res = await fetch("/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "login", email, password }),
@@ -24,10 +24,10 @@ export default function Login() {
       }
 
       // Email localStorage me save
-      localStorage.setItem("userEmail", data.email);
+      localStorage.setItem("userId", data.userId);
 
       alert("Login Successful!");
-      router.push("/cart"); // Redirect to cart page
+      router.push("/"); // Redirect to cart page
     } catch (error) {
       console.error(error);
       alert("Something went wrong");

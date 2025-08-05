@@ -1,8 +1,23 @@
+// utils/cartUtils.js
+
+// Get cart from localStorage
 export const getCart = () => {
   if (typeof window === "undefined") return [];
-  return JSON.parse(localStorage.getItem("cart")) || [];
+  try {
+    return JSON.parse(localStorage.getItem("cart")) || [];
+  } catch (error) {
+    return [];
+  }
 };
 
+// Save updated cart
+export const saveCart = (cart) => {
+  if (typeof window !== "undefined") {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }
+};
+
+// Add new product or increment qty
 export const addToCart = (product) => {
   if (typeof window === "undefined") return;
 
@@ -15,15 +30,26 @@ export const addToCart = (product) => {
     cart.push({ ...product, qty: 1 });
   }
 
-  localStorage.setItem("cart", JSON.stringify(cart));
+  saveCart(cart);
 };
 
+// Remove item from cart by ID
 export const removeFromCart = (id) => {
-  let cart = getCart();
-  cart = cart.filter((item) => item._id !== id);
-  localStorage.setItem("cart", JSON.stringify(cart));
+  const cart = getCart().filter((item) => item._id !== id);
+  saveCart(cart);
 };
 
+// Update item quantity directly
+export const updateQty = (id, qty) => {
+  const cart = getCart().map((item) =>
+    item._id === id ? { ...item, qty: Math.max(1, qty) } : item
+  );
+  saveCart(cart);
+};
+
+// Clear the entire cart
 export const clearCart = () => {
-  localStorage.removeItem("cart");
+  if (typeof window !== "undefined") {
+    localStorage.removeItem("cart");
+  }
 };

@@ -1,30 +1,56 @@
 "use client";
-import { Box, Button, Container, Typography } from "@mui/material";
+import { Box, Button, Container, Typography, Paper } from "@mui/material";
 import { useRouter } from "next/router";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
 export default function OrderPage() {
   const router = useRouter();
 
   return (
-    <Box sx={{ background: "#f7f5f2", minHeight: "100vh", py: 5 }}>
-      <Container sx={{ textAlign: "center" }}>
-        <Typography variant="h3" sx={{ fontWeight: "bold", color: "#ff4d4d" }}>
-          🎉 Order Placed Successfully!
-        </Typography>
-        <Typography sx={{ mt: 2 }}>
-          Thank you for choosing FlavorNest. Your delicious order will be delivered soon.
-        </Typography>
-        <Button
-          variant="contained"
+    <Box
+      sx={{
+        minHeight: "80vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <Container maxWidth="sm">
+        <Paper
+          elevation={4}
           sx={{
-            mt: 4,
-            backgroundColor: "#ff4d4d",
-            "&:hover": { backgroundColor: "#e64444" },
+            p: 5,
+            textAlign: "center",
+            borderRadius: 3,
+            backgroundColor: "#fff",
           }}
-          onClick={() => router.push("/")}
         >
-          Go to Home
-        </Button>
+          <CheckCircleOutlineIcon
+            sx={{ fontSize: 60, color: "#4caf50", mb: 2 }}
+          />
+          <Typography
+            variant="h4"
+            sx={{ fontWeight: "bold", color: "#333", mb: 2 }}
+          >
+            Order Placed Successfully!
+          </Typography>
+          <Typography sx={{ mb: 4, color: "#555" }}>
+            Thank you for choosing <strong>FlavorNest</strong>. Your delicious
+            order will be delivered soon. Sit back and relax!
+          </Typography>
+          <Button
+            variant="contained"
+            size="large"
+            sx={{
+              backgroundColor: "#ff4d4d",
+              px: 5,
+              "&:hover": { backgroundColor: "#e64444" },
+            }}
+            onClick={() => router.push("/")}
+          >
+            Go to Home
+          </Button>
+        </Paper>
       </Container>
     </Box>
   );
