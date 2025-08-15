@@ -1,7 +1,7 @@
 "use client";
 import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import ProductCard from "./components/ProductCard";
+import ProductCard from "../components/ProductCard";
 
 export default function Home() {
   const [products, setProducts] = useState([]);

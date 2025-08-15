@@ -13,8 +13,11 @@ import { useRouter } from "next/navigation";
 const ProductCard = ({ product }) => {
   const router = useRouter();
 
+  // Agar product hi na ho to kuch na render karo
+  if (!product) return null;
+
   const handleViewClick = () => {
-    router.push(`/products/${product._id}`);
+    router.push(`/menu/${product._id}`);
   };
 
   const handleAddToCart = () => {
@@ -25,7 +28,8 @@ const ProductCard = ({ product }) => {
   return (
     <Card
       sx={{
-        maxWidth: 300,
+        minWidth: 300,
+        width:"100%",
         display: "flex",
         flexDirection: "column",
         borderRadius: 3,
@@ -36,11 +40,10 @@ const ProductCard = ({ product }) => {
     >
       <Box
         component="img"
-        src={product.image}
-        alt={product.name}
+        src={product.image || "/placeholder.jpg"}
+        alt={product.name || "Product"}
         sx={{
           width: "100%",
-          minWidth: "300px",
           height: 200,
           objectFit: "cover",
           borderTopLeftRadius: 12,
@@ -48,16 +51,15 @@ const ProductCard = ({ product }) => {
         }}
       />
       <CardContent sx={{ flexGrow: 1 }}>
-        <Typography variant="h6"
-         fontWeight={600} gutterBottom noWrap>
-          {product.name}
+        <Typography variant="h6" fontWeight={600} gutterBottom noWrap>
+          {product.name || "Unnamed Product"}
         </Typography>
         <Typography
           variant="subtitle1"
           sx={{ color: "#0E492B" }}
           fontWeight={700}
         >
-          Rs.{product.price}
+          Rs.{product.price ?? "N/A"}
         </Typography>
       </CardContent>
       <CardActions sx={{ justifyContent: "space-between", px: 2, pb: 2 }}>

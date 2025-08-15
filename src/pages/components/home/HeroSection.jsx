@@ -53,7 +53,7 @@ const HeroSection = () => {
                 variant="contained"
                 size={isSmall ? "small" : "medium"}
                 sx={{ backgroundColor: "#ff4d4d", color: "#fff" }}
-                onClick={() => router.push("/menu")}
+                onClick={() => router.push("/menu/page")}
             >
                 Order Now
             </Button>

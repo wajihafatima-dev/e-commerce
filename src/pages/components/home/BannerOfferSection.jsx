@@ -31,7 +31,7 @@ const BannerOfferSection = () => {
           color: "#ff4d4d",
           fontSize: isSmall ? "0.8rem" : "1rem",
         }}
-        onClick={() => router.push("/menu")}
+        onClick={() => router.push("/menu/page")}
       >
         Explore Menu
       </Button>
