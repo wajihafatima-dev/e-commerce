@@ -6,8 +6,8 @@ import { addToCart } from "@/utils/cartUtils";
 
 export default function ProductDetail() {
   const params = useParams();
-  const id = params?.id; // Safe destructuring
-  const [product, setProduct] = useState(null);
+  const id = params?.id; // safe destructuring
+  const [product, setProduct] = useState({});
 
   const theme = useTheme();
   const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
@@ -30,7 +30,7 @@ export default function ProductDetail() {
   };
 
   return (
-    <Container sx={{ display: "flex", flexDirection: { xs: "column", sm: "row" }, gap: { xs: 1, sm: 4 } }}>
+    <Container sx={{ display: "flex", flexDirection: { xs: "column", sm: "row" }, gap: { xs: 1, sm: 4 }, py: 4 }}>
       <Box sx={{ width: { xs: "100%", sm: "50%" } }}>
         <Box
           component={"img"}
