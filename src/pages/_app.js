@@ -6,7 +6,7 @@ export default function App({ Component, pageProps }) {
   const [showHeader, setShowHeader] = useState(true);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (typeof window == "undefined") {
       const path = window.location.pathname;
       const noHeaderRoutes = ["/authentication/login"];
 

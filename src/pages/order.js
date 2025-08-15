@@ -29,8 +29,18 @@ export default function OrderPage() {
             sx={{ fontSize: 60, color: "#4caf50", mb: 2 }}
           />
           <Typography
-            variant="h4"
-            sx={{ fontWeight: "bold", color: "#333", mb: 2 }}
+            component="h1"
+            sx={{
+              fontWeight: "bold",
+              color: "#333",
+              mb: 2,
+              fontSize: {
+                xs: "1.5rem", // mobile
+                sm: "2rem",   // small screens
+                md: "2.5rem", // medium screens
+                lg: "3rem",   // large screens
+              },
+            }}
           >
             Order Placed Successfully!
           </Typography>

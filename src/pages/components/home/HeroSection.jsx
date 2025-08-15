@@ -5,9 +5,11 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
+import { useRouter } from "next/router";
 import React from 'react'
 
 const HeroSection = () => {
+      const router = useRouter();
     const theme = useTheme();
       const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
   const isMedium = useMediaQuery(theme.breakpoints.between("sm", "md"));
@@ -51,6 +53,7 @@ const HeroSection = () => {
                 variant="contained"
                 size={isSmall ? "small" : "medium"}
                 sx={{ backgroundColor: "#ff4d4d", color: "#fff" }}
+                onClick={() => router.push("/menu")}
             >
                 Order Now
             </Button>
