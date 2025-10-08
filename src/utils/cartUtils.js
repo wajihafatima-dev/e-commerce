@@ -1,55 +1,76 @@
-// utils/cartUtils.js
+// Helper: get userId from localStorage
+const getUserId = () => {
+  if (typeof window === "undefined") return null;
+  return localStorage.getItem("userId"); // assume you store userId in localStorage
+};
 
-// Get cart from localStorage
-export const getCart = () => {
-  if (typeof window === "undefined") return [];
+// Get cart items for current user
+export const getCart = async () => {
   try {
-    return JSON.parse(localStorage.getItem("cart")) || [];
+    const userId = getUserId();
+    if (!userId) return [];
+
+    const res = await fetch(`/api/cart?userId=${userId}`, {
+      method: "GET",
+    });
+
+    if (!res.ok) throw new Error("Failed to fetch cart");
+
+    return await res.json();
   } catch (error) {
+    console.error("Error fetching cart:", error);
     return [];
   }
 };
 
-// Save updated cart
-export const saveCart = (cart) => {
-  if (typeof window !== "undefined") {
-    localStorage.setItem("cart", JSON.stringify(cart));
+export const addToCart = async ({ name, price, qty }) => {
+  try {
+    const userId = getUserId();
+    if (!userId) throw new Error("User not logged in");
+
+    const res = await fetch(`/api/cart`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId, name, price, qty }),
+    });
+
+    if (!res.ok) throw new Error("Failed to add to cart");
+    return await res.json(); 
+  } catch (error) {
+    console.error("Error adding to cart:", error);
   }
 };
 
-// Add new product or increment qty
-export const addToCart = (product) => {
-  if (typeof window === "undefined") return;
+export const updateCartItem = async ({ id, qty, price }) => {
+  try {
+    const res = await fetch(`/api/cart`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id, qty, price }),
+    });
 
-  let cart = getCart();
-  const existingItem = cart.find((item) => item._id === product._id);
-
-  if (existingItem) {
-    existingItem.qty += 1;
-  } else {
-    cart.push({ ...product, qty: 1 });
+    if (!res.ok) throw new Error("Failed to update cart item");
+    return await res.json(); 
+  } catch (error) {
+    console.error("Error updating cart item:", error);
   }
-
-  saveCart(cart);
 };
 
-// Remove item from cart by ID
-export const removeFromCart = (id) => {
-  const cart = getCart().filter((item) => item._id !== id);
-  saveCart(cart);
+// Remove item from cart
+export const removeFromCart = async (id) => {
+  try {
+    const res = await fetch(`/api/cart?id=${id}`, {
+      method: "DELETE",
+    });
+
+    if (!res.ok) throw new Error("Failed to remove item");
+    return await res.json(); 
+  } catch (error) {
+    console.error("Error removing cart item:", error);
+  }
 };
 
-// Update item quantity directly
-export const updateQty = (id, qty) => {
-  const cart = getCart().map((item) =>
-    item._id === id ? { ...item, qty: Math.max(1, qty) } : item
-  );
-  saveCart(cart);
-};
-
-// Clear the entire cart
+// Clear frontend cart (state)
 export const clearCart = () => {
-  if (typeof window !== "undefined") {
-    localStorage.removeItem("cart");
-  }
+  return [];
 };

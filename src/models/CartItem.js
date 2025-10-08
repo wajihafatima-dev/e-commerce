@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
 
-const CartItemSchema = new mongoose.Schema({
-  userId: String,
-  productId: String,
-  qty: Number
-}, { timestamps: true });
+const cartItemSchema = new mongoose.Schema({
+  userId: { type: String, required: true },  
+  name: String,
+  price: Number,
+  qty: { type: Number, default: 1 }
+});
 
-export default mongoose.models.CartItem || mongoose.model("CartItem", CartItemSchema);
+export default mongoose.models.CartItem || mongoose.model("CartItem", cartItemSchema);

@@ -14,8 +14,6 @@ export default function Home() {
   }, []);
 
   const categories = ["All", "Gourmet Pizzas", "Burgers", "Desserts", "Drinks"];
-
-  // Filtered products
   const filteredProducts =
     selectedCategory === "All"
       ? products
@@ -54,13 +52,13 @@ export default function Home() {
         sx={{
           display: "flex",
           justifyContent: "center",
-          px: { xs: 2, sm: 4, md: 6 },
           py: 4,
+          
         }}
       >
         <Grid container spacing={4} justifyContent="center">
           {filteredProducts.map((product) => (
-            <Grid item key={product._id} xs={12} sm={6} md={4} lg={3}>
+            <Grid sx={{}} item key={product._id} xs={12} sm={6} md={4}>
               <ProductCard product={product} />
             </Grid>
           ))}
